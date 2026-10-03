@@ -1,0 +1,436 @@
+/* Balance Grille guest Wi-Fi: shared styles for /, /terms and /connected/.
+   Values from the Figma Brand Guide (file pXAE7AO9nEKtoQUuRBopD7). */
+
+/* ------------------------------------------------------------------ */
+/* 1. Fonts                                                            */
+/* ------------------------------------------------------------------ */
+/* Both families come from Adobe Typekit kit urb0jph, loaded by each page's
+   <link rel="stylesheet" href="https://use.typekit.net/urb0jph.css">.
+   The kit declares these families (names are lowercase, exactly as below):
+
+     "fatfrank"  400 normal                        headlines
+     "effra"     300 / 400 / 500 / 700 / 900       everything else, italics too
+
+   Nothing is self-hosted. If the kit CSS does not load (offline, or the AP
+   blocks use.typekit.net before Connect) the stacks below fall back to the
+   system sans-serif. The stylesheet is pulled non-blocking on the pre-auth
+   pages so a blocked request never delays first paint. */
+:root {
+  --font: "effra", sans-serif;
+  --font-display: "fatfrank", "effra", sans-serif;
+
+  /* Weights per the web guide */
+  --weight-body: 400;      /* Effra Regular: body copy */
+  --weight-label: 700;     /* Effra Bold: eyebrows, Label/Title */
+  --weight-heavy: 900;     /* Effra Heavy: buttons, tags */
+  --weight-display: 400;   /* FatFrank Regular: all headlines */
+}
+
+/* ------------------------------------------------------------------ */
+/* 2. Color tokens                                                     */
+/* ------------------------------------------------------------------ */
+:root {
+  /* core & neutrals */
+  --black: #000;
+  --white: #fff;
+  --gray: #707070;
+  --light-gray: #a7a7a7;
+  --charcoal: #262626;
+  --midnight: #212738;
+  --periwinkle: #818ce6;
+  /* page background: dusty ube purple (the brand's Latte Purple) fading to black */
+  --ube: #453372;
+  /* white alphas */
+  --white-72: rgba(255, 255, 255, 0.72);
+  --white-45: rgba(255, 255, 255, 0.45);
+  --white-15: rgba(255, 255, 255, 0.15);
+  --white-10: rgba(255, 255, 255, 0.10);
+  --white-05: rgba(255, 255, 255, 0.05);
+  /* misc */
+  --focus: #0fbfef;
+  --animate-time: 300ms;
+  --radius: 12px;
+  --radius-lg: 24px;
+}
+
+/* ------------------------------------------------------------------ */
+/* 3. Base                                                             */
+/* ------------------------------------------------------------------ */
+* { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--black);
+}
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font);
+  font-weight: var(--weight-body);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100svh;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+/* Splash: everything vertically centred */
+body.splash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  padding-top: calc(24px + env(safe-area-inset-top));
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+/* Connected: top-aligned scrolling page */
+/* Connected: one centered column, centered on the screen when it fits */
+body.connected {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 56px 16px 40px;
+  padding-top: calc(56px + env(safe-area-inset-top));
+  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  text-align: center;
+}
+/* Terms: left-aligned reading page */
+body.terms {
+  padding: 40px 20px 48px;
+  padding-top: calc(40px + env(safe-area-inset-top));
+  padding-bottom: calc(48px + env(safe-area-inset-bottom));
+}
+
+main, footer { position: relative; z-index: 1; }
+main {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+body.splash main,
+body.connected main { max-width: 560px; }
+body.terms main { max-width: 560px; text-align: left; }
+
+a { transition: color var(--animate-time) ease-in-out; }
+
+/* ------------------------------------------------------------------ */
+/* 4. Page background                                                  */
+/* ------------------------------------------------------------------ */
+/* One gradient on every page: dusty ube purple in the bottom left, fading to black in the upper
+   right. It is fixed to the screen, so it stays put while a long page scrolls. */
+body::before {
+  background: linear-gradient(to top right, var(--ube) 0%, var(--black) 70%);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: fixed;
+  z-index: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* 5. Logo                                                             */
+/* ------------------------------------------------------------------ */
+/* Always 260px wide, on every page and every device. No media queries. */
+.logo {
+  display: block;
+  width: 260px;
+  height: auto;
+  margin: 0 auto 32px;
+  color: var(--white);
+}
+
+/* ------------------------------------------------------------------ */
+/* 6. Type                                                             */
+/* ------------------------------------------------------------------ */
+/* Label/Title: Effra Bold 14px, lh 1.1, .2em, uppercase */
+.eyebrow,
+body.terms h2 {
+  margin: 0 0 12px;
+  font-size: 0.875rem;
+  font-weight: var(--weight-label);
+  line-height: 1.1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white-72);
+}
+section > .eyebrow { color: var(--white-45); margin-bottom: 16px; }
+body.terms h2 { margin: 28px 0 8px; }
+
+/* h1: the one headline style, used on every page. FatFrank, lowercase. */
+h1 {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: min(3.875em, 12vw);
+  font-weight: var(--weight-display);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: lowercase;
+}
+
+section p.body { margin: 0 auto 20px; max-width: 26em; color: var(--white-72); }
+body.terms p { margin: 0 0 12px; color: var(--white-72); }
+body.terms a { color: var(--white); text-decoration: underline; text-underline-offset: 0.15em; }
+
+/* Body Small: Effra 12px */
+p.terms,
+footer {
+  font-size: 0.75rem;
+  color: var(--white-45);
+  text-align: center;
+}
+p.terms { margin: 0 auto; padding-top: 1.25rem; }
+p.status { margin: 0 auto; padding-top: 0.875rem; min-height: 2.4em; font-size: 0.875rem; color: var(--white); text-align: center; }
+p.terms a,
+footer a {
+  color: var(--white-72);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-color: var(--white-45);
+}
+footer a { color: inherit; }
+p.terms a:hover,
+footer a:hover { color: var(--white); }
+footer { margin: 48px auto 0; max-width: 440px; }
+body.terms footer { max-width: 560px; text-align: left; }
+footer p { margin: 0 0 6px; }
+/* Legal fine print: smaller than the footer links, with room above the first line */
+footer .fine-print { font-size: 0.6875rem; line-height: 1.5; margin: 0 auto 8px; max-width: 46em; }
+footer p + .fine-print { padding-top: 14px; }
+footer .fine-print + .fine-print { padding-top: 0; }
+
+/* ------------------------------------------------------------------ */
+/* 7. Buttons                                                          */
+/* ------------------------------------------------------------------ */
+/* One spec for every button: Effra Heavy, uppercase, 16px, .2em tracking,
+   2px border, pill, padding 1em x 2em, 300ms ease-in-out. Variants only
+   change fill, border and text. Default here is .filled.light (white). */
+.cta {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 320px;
+  min-height: 56px;
+  padding: 1em 2em;
+  border: 2px solid var(--white);
+  border-radius: 20em;
+  background: var(--white);
+  color: var(--black);
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: var(--weight-heavy);
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em; /* visually re-centre letter-spaced text */
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color var(--animate-time) ease-in-out,
+              border-color var(--animate-time) ease-in-out,
+              color var(--animate-time) ease-in-out,
+              transform var(--animate-time) ease-in-out,
+              opacity var(--animate-time) ease-in-out;
+}
+.cta.ghost.dark { background: transparent; border-color: var(--white); color: var(--white); }
+.cta.sm { font-size: 0.875rem; min-height: 48px; padding: 0.9em 1.6em; }
+/* Hover only on devices that really hover; touch devices get a stuck :hover after a tap. */
+@media (hover: hover) {
+  .cta:hover { background-color: #e6e6e6; border-color: #e6e6e6; transform: translateY(-1px); }
+  .cta.ghost.dark:hover { background: var(--white); border-color: var(--white); color: var(--black); }
+}
+.cta:active { transform: scale(0.98); }
+.cta:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.cta[disabled],
+.cta.busy { opacity: 0.68; cursor: default; transform: none; pointer-events: none; }
+form { margin: 0; }
+
+/* Back link on terms: a Label/Title */
+.back {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: var(--weight-label);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.back,
+body.terms .back { text-decoration: none; }
+.back:hover { color: var(--white-72); }
+
+/* ------------------------------------------------------------------ */
+/* 9. Connected page (pieces copied from balancegrille.com)            */
+/* ------------------------------------------------------------------ */
+/* Everything is centered on the black page background. */
+/* .container: the one spacing utility. Wrap each section of a page in it. All vertical spacing
+   between sections comes from its padding, so no section sets a margin of its own. */
+.container {
+  display: block;
+  margin: 0 auto;
+  max-width: 560px;
+  padding: 2.4rem 0;
+  width: 100%;
+}
+.container > :last-child { margin-bottom: 0; }
+.container > .logo { margin: 0 auto; }
+footer.container { margin: 0 auto; max-width: 560px; text-align: center; }
+body.terms .container { padding-bottom: 0; }
+
+/* .title: the site's Effra Heavy label */
+.title {
+  align-items: center;
+  color: var(--white);
+  display: flex;
+  font-family: var(--font);
+  font-size: 0.875em;
+  font-weight: var(--weight-heavy);
+  gap: 1em;
+  justify-content: center;
+  letter-spacing: 0.2em;
+  line-height: 1.1;
+  margin: 0 0 1.5rem;
+  position: relative;
+  text-transform: uppercase;
+  width: 100%;
+}
+.title.kicker { color: var(--white-72); margin-bottom: 0.75rem; }
+
+/* Buttons side by side, stacking when there is no room */
+.cta-row { display: flex; flex-wrap: wrap; gap: 0.75em; justify-content: center; }
+.cta-row .cta { max-width: none; min-height: 0; padding: 1em min(2em, 6vw); width: auto; }
+
+/* App store badges and social icons */
+.app-stores { white-space: nowrap; }
+/* Short supporting line under a block, e.g. under the app badges */
+p.note { color: var(--white-72); font-size: 1rem; line-height: 1.6; margin: 0 auto; max-width: 26em; padding-top: 1.5rem; }
+/* Intro line under a headline: the site's body text, Effra 18px at 1.6 */
+p.lede { color: var(--white-72); font-size: 1.125rem; line-height: 1.6; margin: 0 auto 2rem; max-width: 26em; }
+.app-stores a { display: inline-block; margin: 0 0.15em; position: relative; }
+.app-stores a img { display: block; height: 3.5em; }
+@media screen and (max-width: 400px) { .app-stores a img { height: 3em; } }
+@media screen and (max-width: 350px) { .app-stores a img { height: 2.6em; } }
+
+.social-links { align-items: center; display: flex; gap: 1.75em; justify-content: center; }
+.social-links a { display: inline-flex; }
+.social-links a svg { display: block; fill: var(--white); height: 1.6em; transition: opacity var(--animate-time) ease-in-out; width: 1.6em; }
+@media (hover: hover) { .social-links a:hover svg { opacity: 0.72; } }
+.social-links a:focus-visible { outline: 2px solid var(--focus); outline-offset: 6px; }
+
+/* ------------------------------------------------------------------ */
+/* 10. Featured Specials slider (copied from balancegrille.com)        */
+/* ------------------------------------------------------------------ */
+/* Card and slider values match the site's stylesheet. The site uses the Swiper library; here the
+   row scrolls natively with snap points, so there is no library to load. */
+
+/* .container.full: a container that spans the whole screen width instead of the centered column */
+.container.full {
+  margin-left: calc(50% - 50vw);
+  max-width: none;
+  width: 100vw;
+}
+.specials-slider { --slider-inset: max(1rem, calc((100vw - 79em) / 2)); text-align: left; }
+.specials-slider[hidden] { display: none; }
+
+.card-slider-nav {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 0 var(--slider-inset);
+}
+.card-slider-nav .title { flex: 1; justify-content: flex-start; margin: 0; }
+.title.following-line > span { margin-right: 2em; }
+.title.following-line::after { background-color: var(--white-15); content: ""; flex: 1 1 0%; height: 1px; }
+@media screen and (max-width: 840px) { .card-slider-nav .title.following-line::after { display: none; } }
+
+.swiper-buttons { align-items: center; display: flex; }
+.swiper-button-prev,
+.swiper-button-next {
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border: 0;
+  color: var(--white);
+  cursor: pointer;
+  padding: 1em;
+  transition: opacity var(--animate-time) ease-in-out;
+}
+.swiper-buttons svg { display: block; fill: currentColor; height: 1em; width: 1em; }
+.swiper-button-disabled { cursor: auto; opacity: 0.35; pointer-events: none; }
+.swiper-button-prev:focus-visible,
+.swiper-button-next:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* The scrolling row */
+.swiper-wrapper {
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: 0 var(--slider-inset);
+  scroll-padding: 0 var(--slider-inset);
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.swiper-wrapper::-webkit-scrollbar { display: none; }
+/* Mouse drag: grab cursor, and no snapping or text selection while the row is being dragged */
+@media (hover: hover) and (pointer: fine) { .swiper-wrapper { cursor: grab; } }
+.swiper-wrapper.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; -webkit-user-select: none; }
+.swiper-wrapper .card { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }
+
+/* Food item card, "special" variant */
+.card {
+  align-items: center;
+  background-color: var(--black);
+  border-radius: 1.5em;
+  color: var(--white);
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 3.8em min(3.8em, 3.8vw);
+  position: relative;
+  scroll-snap-align: start;
+  text-align: center;
+  text-decoration: none;
+}
+.card-slider-list .card { margin-right: 1.4em; width: min(26em, 80vw); }
+.card-slider-list .card:last-of-type { margin-right: 0; }
+.card.special { padding-bottom: 23em; }
+.card.special.special-colors { background: linear-gradient(var(--special-color-1, #262626), var(--special-color-2, #000)); }
+.card-content { align-items: center; color: var(--white); display: flex; flex-direction: column; position: relative; text-align: center; }
+.card-image { background-position: 50%; background-repeat: no-repeat; background-size: contain; height: 27em; width: 100%; z-index: 1; }
+.card.special .card-image { background-position: top; background-size: cover; bottom: -3.8em; height: 65%; max-width: 36em; position: absolute; width: 120%; }
+.card.special.bubble-tea .card-image { width: 80%; }
+.card h3 {
+  font-family: var(--font-display);
+  font-size: 2.2em;
+  font-weight: var(--weight-display);
+  line-height: 1;
+  margin: 0 0 1rem;
+  text-transform: lowercase;
+}
+.card p { color: var(--white); font-size: 1em; line-height: 1.6; margin: 0; }
+
+/* .tag.filled: Effra Heavy, uppercase, white pill */
+.tag {
+  border: 2px solid var(--white);
+  border-radius: var(--radius);
+  color: var(--white);
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: var(--weight-heavy);
+  letter-spacing: 0.1em;
+  line-height: 0.86;
+  margin: 0 0 1rem;
+  padding: 0.5em 0.9em 0.4em;
+  position: relative;
+  text-transform: uppercase;
+  z-index: 3;
+}
+.tag.filled { background-color: var(--white); border-color: var(--white); color: var(--black); }

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#000000">
+<meta name="format-detection" content="telephone=no">
+<title>You're connected · Balance Guest Wi-Fi</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
+<link rel="preconnect" href="https://p.typekit.net" crossorigin>
+<!-- The AP sends guests here (Redirect URL) once RADIUS has approved them. Typekit loads
+     non-blocking so a slow font request never holds up the page. -->
+<link rel="stylesheet" href="https://use.typekit.net/urb0jph.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://use.typekit.net/urb0jph.css"></noscript>
+<link rel="stylesheet" href="/brand.css">
+</head>
+<body class="connected">
+<main>
+  <div class="container">
+    <img class="logo" src="/logo.svg" alt="Balance Grille">
+  </div>
+
+  <div class="container">
+    <div class="title kicker">Guest Wi-Fi</div>
+    <h1>You&rsquo;re connected</h1>
+    <p class="lede">You are now connected to the Balance Guest Wi-Fi network. Enjoy your stay!</p>
+
+    <div class="cta-row">
+      <a class="cta" href="https://balancegrille.com/order">Order Now</a>
+      <a class="cta ghost dark" href="https://balancegrille.com/menu">View Menu</a>
+    </div>
+  </div>
+
+  <!-- "specials-slider" partial from balancegrille.com. The cards are filled in by /specials.js
+       from the site's WordPress API, so they follow whatever is marked Special there.
+       Hidden until at least one special has loaded. -->
+  <section class="container full specials-slider" id="specials" hidden>
+    <div class="card-slider-list">
+      <div class="swiper light">
+        <div class="card-slider-nav">
+          <div class="title following-line"><span>Featured Specials</span></div>
+          <div class="swiper-buttons">
+            <button type="button" class="swiper-button-prev swiper-button-disabled" aria-label="Previous slide">
+              <svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use href="/images/sprite.svg#arrow-left" xlink:href="/images/sprite.svg#arrow-left"></use></svg>
+            </button>
+            <button type="button" class="swiper-button-next" aria-label="Next slide">
+              <svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use href="/images/sprite.svg#arrow-right" xlink:href="/images/sprite.svg#arrow-right"></use></svg>
+            </button>
+          </div>
+        </div>
+        <div class="swiper-wrapper" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- "app-stores" partial from balancegrille.com -->
+  <div class="container">
+    <div class="title">Download Our App</div>
+    <div class="app-stores">
+      <a href="https://apps.apple.com/us/app/balance-grille-app/id1171411865" title="Download the Balance App on the Apple App Store" target="_blank" rel="noopener noreferrer">
+        <img alt="Download the Balance App on the Apple App Store" src="/images/AppleAppStore.svg">
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.loyaltyplant.partner.balancegrill" title="Get the Balance App on Google Play" target="_blank" rel="noopener noreferrer">
+        <img alt="Get it on Google Play" src="/images/GooglePlay.svg">
+      </a>
+    </div>
+    <p class="note">Order ahead via our app for seamless curbside or in-store pickup. Earn loyalty points with every order!</p>
+  </div>
+
+  <!-- "Follow Us" partial from the balancegrille.com footer -->
+  <div class="container">
+    <div class="title">Follow Us @BalanceGrille</div>
+    <div class="social-links">
+      <a href="https://www.facebook.com/balancegrille" target="_blank" rel="noopener noreferrer" title="Follow Balance Pan-Asian Grille on Facebook">
+        <svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use href="/images/sprite.svg#facebook" xlink:href="/images/sprite.svg#facebook"></use></svg>
+      </a>
+      <a href="https://twitter.com/balancegrille" target="_blank" rel="noopener noreferrer" title="Follow Balance Pan-Asian Grille on Twitter">
+        <svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use href="/images/sprite.svg#twitter" xlink:href="/images/sprite.svg#twitter"></use></svg>
+      </a>
+      <a href="https://www.instagram.com/balancegrille/" target="_blank" rel="noopener noreferrer" title="Follow Balance Pan-Asian Grille on Instagram">
+        <svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use href="/images/sprite.svg#instagram" xlink:href="/images/sprite.svg#instagram"></use></svg>
+      </a>
+    </div>
+  </div>
+
+  <footer class="container">
+    <p><a href="https://balancegrille.com/">balancegrille.com</a> &middot; <a href="/terms">Wi-Fi terms</a></p>
+    <p class="fine-print">&copy; 2026 Balance Syndicated, LLC.</p>
+    <p class="fine-print">The mark BALANCE, the Balance Triangle B mark, and the Balance Pan-Asian Grille logo are registered in the U.S. Patent and Trademark Office. The marks BALANCE, BALANCE PAN-ASIAN GRILLE, the Balance Triangle B mark, the Balance Pan-Asian Grille logo, and all other marks and associated logos are owned by Balance Syndicated LLC.</p>
+  </footer>
+</main>
+<script src="/specials.js"></script>
+</body>
+</html>

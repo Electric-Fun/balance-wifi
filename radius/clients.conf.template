@@ -1,0 +1,17 @@
+# Who may talk to this RADIUS server. Deployed to /etc/freeradius/3.0/clients.conf
+# __SECRET__ is replaced at deploy time; the real secret is never committed.
+
+# Used only by the self-test that deploy.sh runs on the server.
+client localhost {
+    ipaddr = 127.0.0.1
+    secret = testing123
+    require_message_authenticator = no
+}
+
+# The access points. Restaurant internet connections do not have fixed public IPs,
+# so any source address is accepted and the shared secret is what protects it.
+client balance_aps {
+    ipaddr = 0.0.0.0/0
+    secret = __SECRET__
+    shortname = balance-instant-on
+}

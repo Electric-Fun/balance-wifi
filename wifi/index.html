@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#000000">
+<meta name="format-detection" content="telephone=no">
+<title>Balance Guest Wi-Fi</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
+<link rel="preconnect" href="https://p.typekit.net" crossorigin>
+<!-- Typekit, non-blocking: pre-auth the AP may block use.typekit.net, so this must never hold up first paint.
+     Falls back to the system sans-serif. Add use.typekit.net and p.typekit.net to Instant On Allowed Domains. -->
+<link rel="stylesheet" href="https://use.typekit.net/urb0jph.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://use.typekit.net/urb0jph.css"></noscript>
+<link rel="stylesheet" href="/brand.css">
+</head>
+<body class="splash">
+<main>
+  <div class="container">
+    <img class="logo" src="/logo.svg" alt="Balance Grille">
+  </div>
+
+  <div class="container">
+    <!-- <div class="title kicker" id="location">Free Wi-Fi.</div> -->
+    <h1>Connect to free Balance wifi</h1>
+
+    <!-- Aruba Instant On external portal, Guest Authentication (RADIUS) mode.
+         The AP redirects here with ?cmd=login&mac=&network=&ip=&apmac=&site=&post=<host>&url=.
+         Accept posts a fixed guest login to the AP at https://<post>/swarm.cgi. The AP checks it with
+         our RADIUS server, opens access, and sends the guest to the Redirect URL (/connected/).
+         On failure the AP sends the guest back here with ?errmsg=. -->
+    <form id="connect" method="post" action="https://captive-2022.aio.cloudauth.net/swarm.cgi">
+      <input type="hidden" name="cmd" value="authenticate">
+      <input type="hidden" name="user" value="guest">
+      <input type="hidden" name="password" value="guest">
+      <div class="cta-row">
+        <button class="cta" type="submit" id="cta">Accept &amp; Connect</button>
+      </div>
+    </form>
+    <p class="terms">By connecting you agree to the <a href="/terms">terms of use</a>.</p>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </div>
+
+  <footer class="container">
+    <p class="fine-print">&copy; 2026 Balance Syndicated, LLC.</p>
+    <p class="fine-print">The mark BALANCE, the Balance Triangle B mark, and the Balance Pan-Asian Grille logo are registered in the U.S. Patent and Trademark Office. The marks BALANCE, BALANCE PAN-ASIAN GRILLE, the Balance Triangle B mark, the Balance Pan-Asian Grille logo, and all other marks and associated logos are owned by Balance Syndicated LLC.</p>
+  </footer>
+</main>
+
+<script src="/splash.js"></script>
+</body>
+</html>
