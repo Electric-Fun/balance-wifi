@@ -15,7 +15,7 @@ Run all of these from the repo root, `~/Projects/balance-wifi`.
 | Apply a timer or RADIUS change | `npm run deploy:radius` |
 | See who connected and when | `npm run logs` |
 
-First time on a new Mac: `npm install`, then set up `radius/.env` (see [RADIUS server](#radius-server)).
+Nothing to install. On a new Mac, set up `radius/.env` once (see [RADIUS server](#radius-server)).
 
 ## How it works
 
@@ -52,6 +52,7 @@ shows "We couldn't connect you. Please try again."
 | `radius/logs.sh` | Prints recent logins and sessions. |
 | `radius/.env` | Server address and key locations. **Not committed.** |
 | `.github/workflows/pages.yml` | Publishes `wifi/` to GitHub Pages on every push to `main`. |
+| `preview.js` | The local preview server behind `npm start`. No dependencies. |
 
 ## The website
 
@@ -186,8 +187,8 @@ Kept so nobody repeats it.
   over how long a device is remembered. Do not use it.
 - **Posting to `securelogin.arubanetworks.com`.** That hostname is for older Aruba hardware.
   Instant On only answers on the host it passes in `post=`.
-- **Cloudflare Pages.** Worked as a host, but was dropped during the acknowledgment experiments.
-  It could host the site again now that RADIUS mode works over https.
+- **A different host.** The site first ran on another static host. It was replaced by GitHub
+  Pages and removed, along with its tooling.
 
 ## Open items
 

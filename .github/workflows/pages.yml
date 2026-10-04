@@ -1,6 +1,4 @@
 # Publishes the wifi/ folder to GitHub Pages on every push to main.
-# GitHub Pages is used (not Cloudflare Pages) because it serves plain http when
-# "Enforce HTTPS" is off, and the AP can only read the acknowledgment string over http.
 name: Deploy to GitHub Pages
 
 on:

@@ -1,4 +1,0 @@
-# Only used by `npm start` for local preview (wrangler pages dev). The site is hosted on GitHub Pages.
-name = "balance-wifi"
-compatibility_date = "2026-10-01"
-pages_build_output_dir = "wifi"

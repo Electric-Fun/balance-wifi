@@ -3,13 +3,10 @@
   "private": true,
   "description": "Balance Grille guest Wi-Fi portal: splash and connected pages, plus the RADIUS server config",
   "scripts": {
-    "start": "(sleep 5; open http://localhost:8788) & wrangler pages dev wifi --port 8788",
+    "start": "node preview.js",
     "deploy:site": "git push origin main",
     "deploy:radius": "./radius/deploy.sh",
     "logs": "./radius/logs.sh"
-  },
-  "devDependencies": {
-    "wrangler": "^4"
   },
   "volta": {
     "node": "24.16.0"
