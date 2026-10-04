@@ -5,10 +5,10 @@
 #
 #   Session-Timeout   Longest a single session can last, in seconds. 7200 = 2 hours.
 #   Idle-Timeout      How long a device can be idle or away before the access point
-#                     forgets it, in seconds. 300 = 5 minutes. After that the guest
+#                     forgets it, in seconds. 60 = 1 minute. After that the guest
 #                     sees the splash again.
 #
 # After changing a number, run ./radius/deploy.sh from the repo root.
 guest   Cleartext-Password := "guest"
         Session-Timeout := 7200,
-        Idle-Timeout := 300
+        Idle-Timeout := 60
