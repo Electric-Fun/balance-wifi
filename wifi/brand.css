@@ -1,5 +1,6 @@
-/* Balance Grille guest Wi-Fi: shared styles for /, /terms and /connected/.
-   Values from the Figma Brand Guide (file pXAE7AO9nEKtoQUuRBopD7). */
+/* Balance Grille guest Wi-Fi: shared styles for the splash (/), /connected/ and /terms.
+   Type, color and component values come from the Balance Brand Guide in Figma and from the
+   balancegrille.com stylesheet. */
 
 /* ------------------------------------------------------------------ */
 /* 1. Fonts                                                            */
@@ -11,50 +12,36 @@
      "fatfrank"  400 normal                        headlines
      "effra"     300 / 400 / 500 / 700 / 900       everything else, italics too
 
-   Nothing is self-hosted. If the kit CSS does not load (offline, or the AP
-   blocks use.typekit.net before Connect) the stacks below fall back to the
-   system sans-serif. The stylesheet is pulled non-blocking on the pre-auth
-   pages so a blocked request never delays first paint. */
+   Nothing is self-hosted. If the kit does not load (offline, or the AP blocks
+   use.typekit.net before a guest connects) text falls back to the system sans-serif.
+   Every page loads the kit non-blocking, so a blocked request never delays first paint. */
 :root {
   --font: "effra", sans-serif;
   --font-display: "fatfrank", "effra", sans-serif;
 
-  /* Weights per the web guide */
   --weight-body: 400;      /* Effra Regular: body copy */
-  --weight-label: 700;     /* Effra Bold: eyebrows, Label/Title */
-  --weight-heavy: 900;     /* Effra Heavy: buttons, tags */
-  --weight-display: 400;   /* FatFrank Regular: all headlines */
+  --weight-label: 700;     /* Effra Bold: labels */
+  --weight-heavy: 900;     /* Effra Heavy: buttons, titles, tags */
+  --weight-display: 400;   /* FatFrank Regular: headlines */
 }
 
 /* ------------------------------------------------------------------ */
-/* 2. Color tokens                                                     */
+/* 2. Tokens                                                           */
 /* ------------------------------------------------------------------ */
 :root {
-  /* core & neutrals */
   --black: #000;
   --white: #fff;
-  --gray: #707070;
-  --light-gray: #a7a7a7;
-  --charcoal: #262626;
-  --midnight: #212738;
-  --periwinkle: #818ce6;
-  /* page background: dusty ube purple (the brand's Latte Purple) fading to black */
-  --ube: #453372;
-  /* white alphas */
-  --white-72: rgba(255, 255, 255, 0.72);
-  --white-45: rgba(255, 255, 255, 0.45);
-  --white-15: rgba(255, 255, 255, 0.15);
-  --white-10: rgba(255, 255, 255, 0.10);
-  --white-05: rgba(255, 255, 255, 0.05);
-  /* misc */
-  --focus: #0fbfef;
+  --ube: #453372;                           /* dusty ube purple, the page background accent */
+  --white-72: rgba(255, 255, 255, 0.72);    /* secondary text */
+  --white-45: rgba(255, 255, 255, 0.45);    /* fine print */
+  --white-15: rgba(255, 255, 255, 0.15);    /* hairlines */
+  --focus: #0fbfef;                         /* keyboard focus ring */
   --animate-time: 300ms;
   --radius: 12px;
-  --radius-lg: 24px;
 }
 
 /* ------------------------------------------------------------------ */
-/* 3. Base                                                             */
+/* 3. Base and page layout                                             */
 /* ------------------------------------------------------------------ */
 * { box-sizing: border-box; }
 html {
@@ -76,53 +63,9 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
-/* Splash: everything vertically centred */
-body.splash {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 16px;
-  padding-top: calc(24px + env(safe-area-inset-top));
-  padding-bottom: calc(24px + env(safe-area-inset-bottom));
-}
-/* Connected: top-aligned scrolling page */
-/* Connected: one centered column, centered on the screen when it fits */
-body.connected {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 24px 16px 40px;
-  padding-top: calc(24px + env(safe-area-inset-top));
-  padding-bottom: calc(40px + env(safe-area-inset-bottom));
-  text-align: center;
-}
-/* Terms: left-aligned reading page */
-body.terms {
-  padding: 40px 20px 48px;
-  padding-top: calc(40px + env(safe-area-inset-top));
-  padding-bottom: calc(48px + env(safe-area-inset-bottom));
-}
 
-main, footer { position: relative; z-index: 1; }
-main {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  text-align: center;
-}
-body.splash main,
-body.connected main { max-width: 560px; }
-body.terms main { max-width: 560px; text-align: left; }
-
-a { transition: color var(--animate-time) ease-in-out; }
-
-/* ------------------------------------------------------------------ */
-/* 4. Page background                                                  */
-/* ------------------------------------------------------------------ */
-/* One gradient on every page: dusty ube purple in the bottom left, fading to black in the upper
-   right. It is fixed to the screen, so it stays put while a long page scrolls. */
+/* Background on every page: ube purple in the bottom left fading to black in the upper right.
+   Fixed to the screen, so it stays put while a long page scrolls. */
 body::before {
   background: linear-gradient(to top right, var(--ube) 0%, var(--black) 70%);
   content: "";
@@ -132,35 +75,69 @@ body::before {
   z-index: 0;
 }
 
+/* Splash and connected: one centered column, centered on the screen when it fits */
+body.splash,
+body.connected {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 16px 40px;
+  padding-top: calc(24px + env(safe-area-inset-top));
+  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+}
+/* Terms: a left-aligned reading page */
+body.terms {
+  padding: 40px 20px 48px;
+  padding-top: calc(40px + env(safe-area-inset-top));
+  padding-bottom: calc(48px + env(safe-area-inset-bottom));
+}
+
+main {
+  margin: 0 auto;
+  max-width: 560px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+  z-index: 1;
+}
+body.terms main { text-align: left; }
+
+/* .container: the one spacing utility. Wrap each section of a page in it. All vertical space
+   between sections comes from its padding, so no section sets a margin above itself. */
+.container {
+  display: block;
+  margin: 0 auto;
+  max-width: 560px;
+  padding: 1.25rem 0;
+  width: 100%;
+}
+.container > :last-child { margin-bottom: 0; }
+
+/* .container.full: spans the whole screen width instead of the centered column */
+.container.full {
+  margin-left: calc(50% - 50vw);
+  max-width: none;
+  width: 100vw;
+}
+
+a { transition: color var(--animate-time) ease-in-out; }
+form { margin: 0; }
+
 /* ------------------------------------------------------------------ */
-/* 5. Logo                                                             */
+/* 4. Logo                                                             */
 /* ------------------------------------------------------------------ */
 /* Always 200px wide, on every page and every device. No media queries. */
 .logo {
   display: block;
-  width: 200px;
   height: auto;
-  margin: 0 auto 32px;
-  color: var(--white);
+  margin: 0 auto;
+  width: 200px;
 }
 
 /* ------------------------------------------------------------------ */
-/* 6. Type                                                             */
+/* 5. Type                                                             */
 /* ------------------------------------------------------------------ */
-/* Label/Title: Effra Bold 14px, lh 1.1, .2em, uppercase */
-.eyebrow,
-body.terms h2 {
-  margin: 0 0 12px;
-  font-size: 0.875rem;
-  font-weight: var(--weight-label);
-  line-height: 1.1;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--white-72);
-}
-section > .eyebrow { color: var(--white-45); margin-bottom: 16px; }
-body.terms h2 { margin: 28px 0 8px; }
-
 /* h1: the one headline style, used on every page. FatFrank, lowercase. */
 h1 {
   margin: 0 0 0.75rem;
@@ -173,117 +150,7 @@ h1 {
   text-wrap: balance;   /* when a headline wraps, split it into even lines, never one stray word */
 }
 
-section p.body { margin: 0 auto 20px; max-width: 26em; color: var(--white-72); }
-body.terms p { margin: 0 0 12px; color: var(--white-72); }
-body.terms a { color: var(--white); text-decoration: underline; text-underline-offset: 0.15em; }
-
-/* Body Small: Effra 12px */
-p.terms,
-footer {
-  font-size: 0.75rem;
-  color: var(--white-45);
-  text-align: center;
-}
-p.terms { margin: 0 auto; padding-top: 1.25rem; }
-p.status { margin: 0 auto; padding-top: 0.875rem; min-height: 2.4em; font-size: 0.875rem; color: var(--white); text-align: center; }
-p.terms a,
-footer a {
-  color: var(--white-72);
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-  text-decoration-color: var(--white-45);
-}
-footer a { color: inherit; }
-p.terms a:hover,
-footer a:hover { color: var(--white); }
-footer { margin: 48px auto 0; max-width: 440px; }
-body.terms footer { max-width: 560px; text-align: left; }
-footer p { margin: 0 0 6px; }
-/* Legal fine print: smaller than the footer links, with room above the first line */
-footer .fine-print { font-size: 0.6875rem; line-height: 1.5; margin: 0 auto 8px; max-width: 46em; }
-footer p + .fine-print { padding-top: 14px; }
-footer .fine-print + .fine-print { padding-top: 0; }
-
-/* ------------------------------------------------------------------ */
-/* 7. Buttons                                                          */
-/* ------------------------------------------------------------------ */
-/* One spec for every button: Effra Heavy, uppercase, 16px, .2em tracking,
-   2px border, pill, padding 1em x 2em, 300ms ease-in-out. Variants only
-   change fill, border and text. Default here is .filled.light (white). */
-.cta {
-  -webkit-appearance: none;
-  appearance: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 320px;
-  min-height: 56px;
-  padding: 1em 2em;
-  border: 2px solid var(--white);
-  border-radius: 20em;
-  background: var(--white);
-  color: var(--black);
-  cursor: pointer;
-  font-family: var(--font);
-  font-size: 1rem;
-  font-weight: var(--weight-heavy);
-  line-height: 1;
-  letter-spacing: 0.2em;
-  text-indent: 0.2em; /* visually re-centre letter-spaced text */
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: background-color var(--animate-time) ease-in-out,
-              border-color var(--animate-time) ease-in-out,
-              color var(--animate-time) ease-in-out,
-              transform var(--animate-time) ease-in-out,
-              opacity var(--animate-time) ease-in-out;
-}
-.cta.ghost.dark { background: transparent; border-color: var(--white); color: var(--white); }
-.cta.sm { font-size: 0.875rem; min-height: 48px; padding: 0.9em 1.6em; }
-/* Hover only on devices that really hover; touch devices get a stuck :hover after a tap. */
-@media (hover: hover) {
-  .cta:hover { background-color: #e6e6e6; border-color: #e6e6e6; transform: translateY(-1px); }
-  .cta.ghost.dark:hover { background: var(--white); border-color: var(--white); color: var(--black); }
-}
-.cta:active { transform: scale(0.98); }
-.cta:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
-.cta[disabled],
-.cta.busy { opacity: 0.68; cursor: default; transform: none; pointer-events: none; }
-form { margin: 0; }
-
-/* Back link on terms: a Label/Title */
-.back {
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: var(--weight-label);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-.back,
-body.terms .back { text-decoration: none; }
-.back:hover { color: var(--white-72); }
-
-/* ------------------------------------------------------------------ */
-/* 9. Connected page (pieces copied from balancegrille.com)            */
-/* ------------------------------------------------------------------ */
-/* Everything is centered on the black page background. */
-/* .container: the one spacing utility. Wrap each section of a page in it. All vertical spacing
-   between sections comes from its padding, so no section sets a margin of its own. */
-.container {
-  display: block;
-  margin: 0 auto;
-  max-width: 560px;
-  padding: 1.25rem 0;
-  width: 100%;
-}
-.container > :last-child { margin-bottom: 0; }
-.container > .logo { margin: 0 auto; }
-footer.container { margin: 0 auto; max-width: 560px; text-align: center; }
-body.terms .container { padding-bottom: 0; }
-
-/* .title: the site's Effra Heavy label */
+/* .title: the site's Effra Heavy label. .kicker is the quieter one above a headline. */
 .title {
   align-items: center;
   color: var(--white);
@@ -302,18 +169,108 @@ body.terms .container { padding-bottom: 0; }
 }
 .title.kicker { color: var(--white-72); margin-bottom: 0.5rem; }
 
-/* Buttons side by side, stacking when there is no room */
-.cta-row { display: flex; flex-wrap: wrap; gap: 0.75em; justify-content: center; }
-.cta-row .cta { max-width: none; min-height: 0; padding: 1em min(2em, 6vw); width: auto; }
-
-/* App store badges and social icons */
-.app-stores { white-space: nowrap; }
-/* Short supporting line under a block, e.g. under the app badges */
-p.note { color: var(--white-72); font-size: 1rem; line-height: 1.6; margin: 0 auto; max-width: 26em; padding-top: 1.5rem; }
-/* Intro line under a headline: the site's body text, Effra 18px at 1.6 */
+/* Intro line under a headline */
 p.lede { color: var(--white-72); font-size: 1rem; line-height: 1.5; margin: 0 auto 1.25rem; max-width: 28em; }
+/* Supporting line under a block, e.g. under the app badges */
+p.note { color: var(--white-72); font-size: 1rem; line-height: 1.6; margin: 0 auto; max-width: 26em; padding-top: 1.5rem; }
+
+/* Splash: the agreement line and the "couldn't connect" message under the button */
+p.terms { color: var(--white-45); font-size: 0.75rem; margin: 0 auto; padding-top: 1.25rem; }
+p.terms a { color: var(--white-72); text-decoration: underline; text-decoration-color: var(--white-45); text-underline-offset: 0.15em; }
+p.terms a:hover { color: var(--white); }
+p.status { color: var(--white); font-size: 0.875rem; margin: 0 auto; min-height: 2.4em; padding-top: 0.875rem; }
+
+/* Terms page text */
+body.terms h2 {
+  color: var(--white-72);
+  font-size: 0.875rem;
+  font-weight: var(--weight-label);
+  letter-spacing: 0.2em;
+  line-height: 1.1;
+  margin: 0 0 8px;
+  padding-top: 28px;
+  text-transform: uppercase;
+}
+body.terms p { color: var(--white-72); margin: 0 0 12px; }
+body.terms a { color: var(--white); text-decoration: underline; text-underline-offset: 0.15em; }
+/* Back link: a label, not an underlined link */
+body.terms .back {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: var(--weight-label);
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+body.terms .back:hover { color: var(--white-72); }
+
+/* ------------------------------------------------------------------ */
+/* 6. Footer                                                           */
+/* ------------------------------------------------------------------ */
+footer { color: var(--white-45); font-size: 0.75rem; }
+footer a { color: inherit; text-decoration: underline; text-decoration-color: var(--white-45); text-underline-offset: 0.15em; }
+footer a:hover { color: var(--white); }
+footer p { margin: 0 0 6px; }
+/* Legal fine print: smaller than the footer links, with room above the first line */
+footer .fine-print { font-size: 0.6875rem; line-height: 1.5; margin: 0 auto 8px; max-width: 46em; }
+footer p + .fine-print { padding-top: 14px; }
+footer .fine-print + .fine-print { padding-top: 0; }
+/* On the left-aligned terms page the fine print lines up with the text above it, in the same
+   faint color as on the other pages */
+body.terms footer .fine-print { color: var(--white-45); margin-left: 0; }
+
+/* ------------------------------------------------------------------ */
+/* 7. Buttons                                                          */
+/* ------------------------------------------------------------------ */
+/* One spec for every button: Effra Heavy, uppercase, .2em tracking, 2px border, pill.
+   The default is the white filled button. .ghost.dark is the outlined one for dark backgrounds. */
+.cta {
+  -webkit-appearance: none;
+  appearance: none;
+  align-items: center;
+  background: var(--white);
+  border: 2px solid var(--white);
+  border-radius: 20em;
+  color: var(--black);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: var(--weight-heavy);
+  justify-content: center;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  padding: 1em min(2em, 6vw);
+  text-decoration: none;
+  text-indent: 0.2em;   /* visually re-centre letter-spaced text */
+  text-transform: uppercase;
+  transition: background-color var(--animate-time) ease-in-out,
+              border-color var(--animate-time) ease-in-out,
+              color var(--animate-time) ease-in-out,
+              transform var(--animate-time) ease-in-out,
+              opacity var(--animate-time) ease-in-out;
+}
+.cta.ghost.dark { background: transparent; border-color: var(--white); color: var(--white); }
+/* Hover only on devices that really hover; touch devices get a stuck :hover after a tap. */
+@media (hover: hover) {
+  .cta:hover { background-color: #e6e6e6; border-color: #e6e6e6; transform: translateY(-1px); }
+  .cta.ghost.dark:hover { background: var(--white); border-color: var(--white); color: var(--black); }
+}
+.cta:active { transform: scale(0.98); }
+.cta:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+/* .busy: set by splash.js while the AP is checking the login */
+.cta.busy { cursor: default; opacity: 0.68; pointer-events: none; transform: none; }
+
+/* Buttons side by side, wrapping when there is no room */
+.cta-row { display: flex; flex-wrap: wrap; gap: 0.75em; justify-content: center; }
+
+/* ------------------------------------------------------------------ */
+/* 8. App badges and social icons (from balancegrille.com)             */
+/* ------------------------------------------------------------------ */
+.app-stores { white-space: nowrap; }
 .app-stores a { display: inline-block; margin: 0 0.15em; position: relative; }
 .app-stores a img { display: block; height: 3.5em; }
+/* Narrow phones: smaller, so both badges stay on one line */
 @media screen and (max-width: 400px) { .app-stores a img { height: 3em; } }
 @media screen and (max-width: 350px) { .app-stores a img { height: 2.6em; } }
 
@@ -324,20 +281,15 @@ p.lede { color: var(--white-72); font-size: 1rem; line-height: 1.5; margin: 0 au
 .social-links a:focus-visible { outline: 2px solid var(--focus); outline-offset: 6px; }
 
 /* ------------------------------------------------------------------ */
-/* 10. Featured Specials slider (copied from balancegrille.com)        */
+/* 9. Featured Specials slider (from balancegrille.com)                */
 /* ------------------------------------------------------------------ */
 /* Card and slider values match the site's stylesheet. The site uses the Swiper library; here the
-   row scrolls natively with snap points, so there is no library to load. */
-
-/* .container.full: a container that spans the whole screen width instead of the centered column */
-.container.full {
-  margin-left: calc(50% - 50vw);
-  max-width: none;
-  width: 100vw;
-}
+   row scrolls natively with snap points, so there is no library to load. The cards are built by
+   specials.js. */
 .specials-slider { --slider-inset: max(1rem, calc((100vw - 79em) / 2)); text-align: left; }
 .specials-slider[hidden] { display: none; }
 
+/* Title on the left, arrows on the right */
 .card-slider-nav {
   align-items: center;
   display: flex;
@@ -382,10 +334,13 @@ p.lede { color: var(--white-72); font-size: 1rem; line-height: 1.5; margin: 0 au
 /* Mouse drag: grab cursor, and no snapping or text selection while the row is being dragged */
 @media (hover: hover) and (pointer: fine) { .swiper-wrapper { cursor: grab; } }
 .swiper-wrapper.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; -webkit-user-select: none; }
-.swiper-wrapper .card { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }
 
-/* Food item card, "special" variant */
+/* Food item card, "special" variant. Every measurement is in em, so the one font-size below
+   scales the whole card: width, padding, photo and headline together. It is a third smaller
+   than on balancegrille.com. */
 .card {
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
   align-items: center;
   background-color: var(--black);
   border-radius: 1.5em;
@@ -393,23 +348,34 @@ p.lede { color: var(--white-72); font-size: 1rem; line-height: 1.5; margin: 0 au
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
+  font-size: 0.67em;
+  margin-right: 1.4em;
   overflow: hidden;
-  padding: 3.8em min(3.8em, 3.8vw);
+  padding: 3.8em min(3.8em, 3.8vw) 23em;
   position: relative;
   scroll-snap-align: start;
   text-align: center;
   text-decoration: none;
+  user-select: none;
+  width: min(26em, 80vw);
 }
-/* Cards are a third smaller than on balancegrille.com. Every card measurement is in em, so one
-   font-size scales the whole card: width, padding, photo and headline together. */
-.card-slider-list .card { font-size: 0.67em; margin-right: 1.4em; width: min(26em, 80vw); }
-.card-slider-list .card:last-of-type { margin-right: 0; }
-.card.special { padding-bottom: 23em; }
-.card.special.special-colors { background: linear-gradient(var(--special-color-1, #262626), var(--special-color-2, #000)); }
-.card-content { align-items: center; color: var(--white); display: flex; flex-direction: column; position: relative; text-align: center; }
-.card-image { background-position: 50%; background-repeat: no-repeat; background-size: contain; height: 27em; width: 100%; z-index: 1; }
-.card.special .card-image { background-position: top; background-size: cover; bottom: -3.8em; height: 65%; max-width: 36em; position: absolute; width: 120%; }
-.card.special.bubble-tea .card-image { width: 80%; }
+.card:last-of-type { margin-right: 0; }
+/* Gradient from the item's two "special colors" in WordPress, set per card by specials.js */
+.card.special-colors { background: linear-gradient(var(--special-color-1, #262626), var(--special-color-2, #000)); }
+.card-content { align-items: center; display: flex; flex-direction: column; position: relative; }
+/* Product photo, anchored to the bottom of the card */
+.card-image {
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  bottom: -3.8em;
+  height: 65%;
+  max-width: 36em;
+  position: absolute;
+  width: 120%;
+  z-index: 1;
+}
+.card.bubble-tea .card-image { width: 80%; }
 .card h3 {
   font-family: var(--font-display);
   font-size: 2.2em;
@@ -418,22 +384,21 @@ p.lede { color: var(--white-72); font-size: 1rem; line-height: 1.5; margin: 0 au
   margin: 0 0 1rem;
   text-transform: lowercase;
 }
-.card p { color: var(--white); font-size: 0.9375rem; line-height: 1.5; margin: 0; }  /* rem: stays readable on the smaller card */
+.card p { font-size: 0.9375rem; line-height: 1.5; margin: 0; }   /* rem: stays readable on the smaller card */
 
-/* .tag.filled: Effra Heavy, uppercase, white pill */
+/* .tag: Effra Heavy, uppercase, white pill */
 .tag {
-  border: 2px solid var(--white);
+  background-color: var(--white);
   border-radius: var(--radius);
-  color: var(--white);
+  color: var(--black);
   display: inline-block;
   font-size: 0.675rem;
   font-weight: var(--weight-heavy);
   letter-spacing: 0.1em;
   line-height: 0.86;
   margin: 0 0 1rem;
-  padding: 0.5em 0.9em 0.4em;
+  padding: calc(0.5em + 2px) calc(0.9em + 2px) calc(0.4em + 2px);   /* +2px replaces the old border */
   position: relative;
   text-transform: uppercase;
   z-index: 3;
 }
-.tag.filled { background-color: var(--white); border-color: var(--white); color: var(--black); }

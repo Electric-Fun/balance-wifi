@@ -10,8 +10,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://use.typekit.net" crossorigin>
 <link rel="preconnect" href="https://p.typekit.net" crossorigin>
-<!-- The AP sends guests here (Redirect URL) once RADIUS has approved them. Typekit loads
-     non-blocking so a slow font request never holds up the page. -->
+<!-- The AP sends guests here, its Redirect URL, once RADIUS has approved them. -->
 <link rel="stylesheet" href="https://use.typekit.net/urb0jph.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://use.typekit.net/urb0jph.css"></noscript>
 <link rel="stylesheet" href="/brand.css">
@@ -33,26 +32,21 @@
     </div>
   </div>
 
-  <!-- "specials-slider" partial from balancegrille.com. The cards are filled in by /specials.js
-       from the site's WordPress API, so they follow whatever is marked Special there.
-       Hidden until at least one special has loaded. -->
+  <!-- Featured Specials, the "specials-slider" partial from balancegrille.com. specials.js fills
+       the row from the site's WordPress API. Hidden until at least one special has loaded. -->
   <section class="container full specials-slider" id="specials" hidden>
-    <div class="card-slider-list">
-      <div class="swiper light">
-        <div class="card-slider-nav">
-          <div class="title following-line"><span>Featured Specials</span></div>
-          <div class="swiper-buttons">
-            <button type="button" class="swiper-button-prev swiper-button-disabled" aria-label="Previous slide">
-              <svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use href="/images/sprite.svg#arrow-left" xlink:href="/images/sprite.svg#arrow-left"></use></svg>
-            </button>
-            <button type="button" class="swiper-button-next" aria-label="Next slide">
-              <svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use href="/images/sprite.svg#arrow-right" xlink:href="/images/sprite.svg#arrow-right"></use></svg>
-            </button>
-          </div>
-        </div>
-        <div class="swiper-wrapper" aria-live="polite"></div>
+    <div class="card-slider-nav">
+      <div class="title following-line"><span>Featured Specials</span></div>
+      <div class="swiper-buttons">
+        <button type="button" class="swiper-button-prev swiper-button-disabled" aria-label="Previous slide">
+          <svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use href="/images/sprite.svg#arrow-left" xlink:href="/images/sprite.svg#arrow-left"></use></svg>
+        </button>
+        <button type="button" class="swiper-button-next" aria-label="Next slide">
+          <svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use href="/images/sprite.svg#arrow-right" xlink:href="/images/sprite.svg#arrow-right"></use></svg>
+        </button>
       </div>
     </div>
+    <div class="swiper-wrapper" aria-live="polite"></div>
   </section>
 
   <!-- "app-stores" partial from balancegrille.com -->
@@ -91,6 +85,7 @@
     <p class="fine-print">The mark BALANCE, the Balance Triangle B mark, and the Balance Pan-Asian Grille logo are registered in the U.S. Patent and Trademark Office. The marks BALANCE, BALANCE PAN-ASIAN GRILLE, the Balance Triangle B mark, the Balance Pan-Asian Grille logo, and all other marks and associated logos are owned by Balance Syndicated LLC.</p>
   </footer>
 </main>
+
 <script src="/specials.js"></script>
 </body>
 </html>

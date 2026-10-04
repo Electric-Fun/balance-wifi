@@ -42,6 +42,9 @@ shows "We couldn't connect you. Please try again."
 | `wifi/connected/index.html` | The page guests land on once connected. Order, menu, promos, app, socials. |
 | `wifi/terms.html` | Guest Wi-Fi terms. **Placeholder wording. Have Balance review it.** |
 | `wifi/brand.css` | All styling for the three pages. Fonts are at the top. |
+| `wifi/splash.js` | Splash behaviour: points the form at the AP, shows the location and error line. |
+| `wifi/specials.js` | Loads the Featured Specials row on the connected page. |
+| `wifi/images/` | App badges and the icon sprite. |
 | `wifi/logo.svg`, `wifi/favicon.svg` | Logo artwork and browser icon. |
 | `radius/authorize` | The guest login and the two timers. |
 | `radius/clients.conf.template` | Which devices may talk to the RADIUS server. |
@@ -70,7 +73,7 @@ Accept & Connect does nothing useful on your Mac. It only works on the restauran
 
 **Locations.** The splash shows a location when the AP's site name contains one of:
 `perrysburg`, `sylvania`, `toledo`, `cleveland`. To add one, edit the `LOCATIONS` list in
-`wifi/index.html`.
+`wifi/splash.js`.
 
 **GitHub Pages settings** (repo Settings, Pages): Source is GitHub Actions, custom domain is
 `wifi.balancegrille.com`, and **Enforce HTTPS is off**. Leave it off. The Instant On Portal and
@@ -94,7 +97,7 @@ It serves no web pages.
 | Setting | Now | Meaning |
 | --- | --- | --- |
 | `Session-Timeout` | `7200` | A session ends after 2 hours, even if the guest is still there. |
-| `Idle-Timeout` | `300` | A device that has been away 5 minutes is forgotten and sees the splash again. |
+| `Idle-Timeout` | `60` | A device that has left the network is forgotten after about 1 minute and sees the splash again. In practice the AP takes 2 to 3 minutes. A device still in range is never idle; only `Session-Timeout` ends its session. |
 
 **See activity.** `npm run logs` shows the last 20 login decisions and the last 20 session
 events. Times are UTC. Devices are shown by the last 4 characters of their Wi-Fi address.
@@ -152,7 +155,7 @@ clears every approved device.
 | No splash, phone says "No Internet Connection" | Phone was told to use the network without internet | Forget the network and rejoin. |
 | "Failed to join" right after an AP restart | AP still starting, takes about 3 minutes | Wait and retry. |
 | Splash says "We couldn't connect you" | RADIUS refused or was unreachable | `npm run logs`. No new line means the AP can't reach the server: check the IP and secret in Instant On. "Login incorrect" means the login in `wifi/index.html` and `radius/authorize` differ. |
-| Tapping Accept shows "server cannot be found" | Form is not pointed at the AP's own host | Check the `post=` value in the splash address is one of the hosts listed in `wifi/index.html`. |
+| Tapping Accept shows "server cannot be found" | Form is not pointed at the AP's own host | Check the `post=` value in the splash address is one of the hosts accepted in `wifi/splash.js`. |
 | Safari warns "This form is not secure" | Form is posting to `http://` | The form action must be `https://`. |
 | Fonts look wrong on the splash | Adobe font hosts blocked before connecting | Confirm the two typekit domains are in Allowed Domains. |
 | Connected page shows a browser error | Redirect URL uses `https://` | Use `http://` until HTTPS is working for the domain. |
@@ -162,10 +165,16 @@ clears every approved device.
 Styled from the Balance Brand Guide in Figma. FatFrank for headlines, Effra for everything else,
 both from Adobe Typekit kit `urb0jph`. Buttons and tags use Effra Heavy 900, labels Bold 700,
 body Regular 400. Buttons are white pills with no glow. The logo is the "balance grille" lockup,
-placed inline in each page. Colors and sizes are named at the top of `wifi/brand.css`.
+one shared file, `wifi/logo.svg`, always 200px wide. The background is one gradient on every
+page: dusty ube purple (`--ube`) in the bottom left fading to black. Section spacing comes from
+one utility class, `.container`. Colors and sizes are named at the top of `wifi/brand.css`.
 
-App store buttons and social icons are simple placeholders. Swap in official artwork when
-Balance supplies it.
+The app store badges, social icons and arrows are the same files balancegrille.com uses, in
+`wifi/images/`. The badges have their gray outline removed.
+
+The connected page's Featured Specials row is built by `wifi/specials.js` from the
+balancegrille.com WordPress API: every menu item in the "Special" category. Change the category
+in WordPress and the row follows. If the site cannot be reached the row stays hidden.
 
 ## What was tried and did not work
 
@@ -182,7 +191,6 @@ Kept so nobody repeats it.
 
 ## Open items
 
-- Confirm on the AP that the 5-minute idle timer really brings the splash back.
 - HTTPS for `wifi.balancegrille.com` on GitHub Pages has not been issued. Once it is, the Portal
   and Redirect URLs can move to `https://`.
 - Balance to review the terms wording and supply official app badges and social icons.

@@ -1,7 +1,7 @@
 {
   "name": "balance-wifi",
   "private": true,
-  "description": "Balance Grille guest Wi-Fi captive portal (wifi.balancegrille.com)",
+  "description": "Balance Grille guest Wi-Fi portal: splash and connected pages, plus the RADIUS server config",
   "scripts": {
     "start": "(sleep 5; open http://localhost:8788) & wrangler pages dev wifi --port 8788",
     "deploy:site": "git push origin main",

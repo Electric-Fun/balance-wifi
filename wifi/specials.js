@@ -1,12 +1,13 @@
-// Featured Specials slider for the connected page.
+// Featured Specials row on the connected page (wifi/connected/index.html).
 //
 // Pulls every menu item in the "Special" category from the balancegrille.com WordPress API and
-// builds the same cards the site's specials slider uses. Change the Special category in
+// builds the same cards the site's specials slider uses. Change what is marked Special in
 // WordPress and this updates by itself. If the site cannot be reached, or there are no specials,
 // the section stays hidden.
 (function () {
   var API = 'https://balancegrille.com/wp-json/wp/v2/';
-  var SPECIAL_CATEGORY = 41;                       // "Special" category id on balancegrille.com
+  var SPECIAL_CATEGORY = 41;   // id of the "Special" category on balancegrille.com
+  // Each menu type is its own list in the API, so there is one request per type.
   var TYPES = ['bowls', 'tacos', 'salads', 'snacks', 'bubble-tea', 'lattes', 'desserts'];
   var QUERY = '?categories=' + SPECIAL_CATEGORY + '&per_page=10&_embed=wp:featuredmedia' +
               '&_fields=id,type,title,link,acf,_links,_embedded';
@@ -34,9 +35,9 @@
   function card(item) {
     var acf = item.acf || {};
     var a = document.createElement('a');
-    a.className = 'card ' + item.type + ' swiper-slide special special-colors';
+    a.className = 'card ' + item.type + ' special-colors';   // item.type, e.g. "bubble-tea", is a CSS hook
     a.href = /^https:\/\/balancegrille\.com\//.test(item.link) ? item.link : 'https://balancegrille.com/menu';
-    a.draggable = false;                           // let the row be dragged, not the link
+    a.draggable = false;   // so a mouse drag moves the row instead of dragging the link
     var c1 = hex(acf.special_color_1), c2 = hex(acf.special_color_2);
     if (c1) a.style.setProperty('--special-color-1', c1);
     if (c2) a.style.setProperty('--special-color-2', c2);

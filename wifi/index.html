@@ -7,11 +7,11 @@
 <meta name="theme-color" content="#000000">
 <meta name="format-detection" content="telephone=no">
 <title>Balance Guest Wi-Fi</title>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://use.typekit.net" crossorigin>
 <link rel="preconnect" href="https://p.typekit.net" crossorigin>
-<!-- Typekit, non-blocking: pre-auth the AP may block use.typekit.net, so this must never hold up first paint.
-     Falls back to the system sans-serif. Add use.typekit.net and p.typekit.net to Instant On Allowed Domains. -->
+<!-- Fonts load non-blocking: before a guest connects the AP may block Typekit, and that must
+     never hold up the page. use.typekit.net and p.typekit.net belong in Instant On Allowed Domains. -->
 <link rel="stylesheet" href="https://use.typekit.net/urb0jph.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://use.typekit.net/urb0jph.css"></noscript>
 <link rel="stylesheet" href="/brand.css">
@@ -26,11 +26,11 @@
     <div class="title kicker" id="location">Guest Wi-Fi</div>
     <h1>Connect to free Balance wifi</h1>
 
-    <!-- Aruba Instant On external portal, Guest Authentication (RADIUS) mode.
-         The AP redirects here with ?cmd=login&mac=&network=&ip=&apmac=&site=&post=<host>&url=.
-         Accept posts a fixed guest login to the AP at https://<post>/swarm.cgi. The AP checks it with
-         our RADIUS server, opens access, and sends the guest to the Redirect URL (/connected/).
-         On failure the AP sends the guest back here with ?errmsg=. -->
+    <!-- The AP sends the guest here with ?post=<its captive host>&site=<site name>.
+         Accept posts a fixed guest login to https://<post>/swarm.cgi. The AP checks it with our
+         RADIUS server, opens access, and sends the guest to the Redirect URL, /connected/.
+         If the login fails the AP sends the guest back here with ?errmsg=.
+         splash.js sets the real form action; the one below is the fallback without JavaScript. -->
     <form id="connect" method="post" action="https://captive-2022.aio.cloudauth.net/swarm.cgi">
       <input type="hidden" name="cmd" value="authenticate">
       <input type="hidden" name="user" value="guest">

@@ -1,55 +1,50 @@
-// Splash page behaviour for the Balance guest Wi-Fi portal (wifi/index.html).
-// Everything here is optional: if this file fails to load, the form still posts to the AP.
+// Splash page behaviour (wifi/index.html). All of it is optional: if this file fails to load or
+// anything here throws, the form still posts to the AP with its built-in fallback address.
 (function () {
-  // All optional. Any failure leaves the generic page intact.
   try {
+    // Query string the AP adds when it sends a guest here, e.g. ?post=...&site=Balance%20Perrysburg
     var q = {};
-    var s = window.location.search.replace(/^\?/, '');
-    if (s) {
-      s.split('&').forEach(function (kv) {
-        var i = kv.indexOf('=');
-        var k = decodeURIComponent((i < 0 ? kv : kv.slice(0, i)).replace(/\+/g, ' '));
-        var v = decodeURIComponent((i < 0 ? '' : kv.slice(i + 1)).replace(/\+/g, ' '));
-        if (k) q[k] = v;
-      });
-    }
+    window.location.search.replace(/^\?/, '').split('&').forEach(function (pair) {
+      if (!pair) return;
+      var i = pair.indexOf('=');
+      var key = decodeURIComponent((i < 0 ? pair : pair.slice(0, i)).replace(/\+/g, ' '));
+      var value = decodeURIComponent((i < 0 ? '' : pair.slice(i + 1)).replace(/\+/g, ' '));
+      if (key) q[key] = value;
+    });
 
-    // Location line. Instant On sends site="Balance Perrysburg"; older Instant sends apname
-    // like "perrysburg-01". Match a known slug inside either. Unknown names leave the default line.
+    // Location line. If the Instant On site name contains one of these words, name the location.
+    // Any other site name leaves the default line in place.
     var LOCATIONS = {
-      'downtown-toledo': 'Downtown Toledo',
-      'downtown-cleveland': 'Downtown Cleveland',
-      'perrysburg': 'Perrysburg',
-      'sylvania': 'Sylvania',
-      'toledo': 'Downtown Toledo',
-      'cleveland': 'Downtown Cleveland'
+      perrysburg: 'Perrysburg',
+      sylvania: 'Sylvania',
+      toledo: 'Downtown Toledo',
+      cleveland: 'Downtown Cleveland'
     };
-    var where = ((q.site || '') + ' ' + (q.apname || '')).toLowerCase().replace(/[\s_]+/g, '-');
-    for (var slug in LOCATIONS) {
-      if (where.indexOf(slug) !== -1) {
-        document.getElementById('location').textContent = 'Welcome to Balance ' + LOCATIONS[slug];
+    var site = (q.site || '').toLowerCase();
+    for (var word in LOCATIONS) {
+      if (site.indexOf(word) !== -1) {
+        document.getElementById('location').textContent = 'Welcome to Balance ' + LOCATIONS[word];
         break;
       }
     }
 
-    // Point the login at the AP's own captive host from ?post= (older firmware: ?switchip=).
-    // Only hostnames Aruba uses are accepted, so a tampered link cannot redirect the form.
+    // Send the login to the AP's own captive host, which it passes as ?post=. Only hostnames
+    // Instant On uses are accepted, so a tampered link cannot point the form anywhere else.
     var form = document.getElementById('connect');
     var cta = document.getElementById('cta');
     var status = document.getElementById('status');
-    var host = (q.post || q.switchip || '').toLowerCase().replace(/[^a-z0-9.-]/g, '');
-    var okHost = /^(securelogin\.arubanetworks\.com|captiveportal-login\.arubainstanton\.com|captive-\d{4}\.aio\.cloudauth\.net)$/;
-    if (host && okHost.test(host)) {
+    var host = (q.post || '').toLowerCase();
+    if (/^(captive-\d{4}\.aio\.cloudauth\.net|captiveportal-login\.arubainstanton\.com)$/.test(host)) {
       form.action = 'https://' + host + '/swarm.cgi';
     }
 
-    // The AP returns the guest here with ?errmsg= when the login fails.
+    // The AP sends the guest back here with ?errmsg= when the login fails.
     if (q.errmsg) {
-      status.textContent = 'We couldn\u2019t connect you. Please try again.';
+      status.textContent = 'We couldn’t connect you. Please try again.';
     }
 
     form.addEventListener('submit', function () {
-      cta.textContent = 'Connecting\u2026';
+      cta.textContent = 'Connecting…';
       status.textContent = '';
       setTimeout(function () { cta.className = 'cta busy'; }, 0);
     });
