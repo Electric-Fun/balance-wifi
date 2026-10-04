@@ -77,8 +77,9 @@ Accept & Connect does nothing useful on your Mac. It only works on the restauran
 `wifi/splash.js`.
 
 **GitHub Pages settings** (repo Settings, Pages): Source is GitHub Actions, custom domain is
-`wifi.balancegrille.com`, and **Enforce HTTPS is off**. Leave it off. The Instant On Portal and
-Redirect URLs use `http://`.
+`wifi.balancegrille.com`, and **Enforce HTTPS is off**. Leave it off: Instant On forces plain `http://` for
+the Portal and Redirect URLs, so the site must keep answering on http. (https also works, for
+anyone opening the site directly.)
 
 ## RADIUS server
 
@@ -159,7 +160,7 @@ clears every approved device.
 | Tapping Accept shows "server cannot be found" | Form is not pointed at the AP's own host | Check the `post=` value in the splash address is one of the hosts accepted in `wifi/splash.js`. |
 | Safari warns "This form is not secure" | Form is posting to `http://` | The form action must be `https://`. |
 | Fonts look wrong on the splash | Adobe font hosts blocked before connecting | Confirm the two typekit domains are in Allowed Domains. |
-| Connected page shows a browser error | Redirect URL uses `https://` | Use `http://` until HTTPS is working for the domain. |
+| Portal or connected page does not load from the AP | Portal or Redirect URL was entered as `https://` | Instant On requires `http://` for both. |
 
 ## Brand
 
@@ -192,7 +193,5 @@ Kept so nobody repeats it.
 
 ## Open items
 
-- HTTPS for `wifi.balancegrille.com` on GitHub Pages has not been issued. Once it is, the Portal
-  and Redirect URLs can move to `https://`.
 - Balance to review the terms wording and supply official app badges and social icons.
 - Roll out to all four locations: Downtown Cleveland, Downtown Toledo, Sylvania, Perrysburg.
