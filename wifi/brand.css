@@ -93,8 +93,8 @@ body.connected {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 56px 16px 40px;
-  padding-top: calc(56px + env(safe-area-inset-top));
+  padding: 24px 16px 40px;
+  padding-top: calc(24px + env(safe-area-inset-top));
   padding-bottom: calc(40px + env(safe-area-inset-bottom));
   text-align: center;
 }
@@ -135,10 +135,10 @@ body::before {
 /* ------------------------------------------------------------------ */
 /* 5. Logo                                                             */
 /* ------------------------------------------------------------------ */
-/* Always 260px wide, on every page and every device. No media queries. */
+/* Always 200px wide, on every page and every device. No media queries. */
 .logo {
   display: block;
-  width: 260px;
+  width: 200px;
   height: auto;
   margin: 0 auto 32px;
   color: var(--white);
@@ -163,13 +163,14 @@ body.terms h2 { margin: 28px 0 8px; }
 
 /* h1: the one headline style, used on every page. FatFrank, lowercase. */
 h1 {
-  margin: 0 0 1rem;
+  margin: 0 0 0.75rem;
   font-family: var(--font-display);
-  font-size: min(3.875em, 12vw);
+  font-size: min(3em, 11vw);
   font-weight: var(--weight-display);
   line-height: 1.1;
   letter-spacing: -0.01em;
   text-transform: lowercase;
+  text-wrap: balance;   /* when a headline wraps, split it into even lines, never one stray word */
 }
 
 section p.body { margin: 0 auto 20px; max-width: 26em; color: var(--white-72); }
@@ -274,7 +275,7 @@ body.terms .back { text-decoration: none; }
   display: block;
   margin: 0 auto;
   max-width: 560px;
-  padding: 2rem 0;
+  padding: 1.25rem 0;
   width: 100%;
 }
 .container > :last-child { margin-bottom: 0; }
@@ -299,7 +300,7 @@ body.terms .container { padding-bottom: 0; }
   text-transform: uppercase;
   width: 100%;
 }
-.title.kicker { color: var(--white-72); margin-bottom: 0.75rem; }
+.title.kicker { color: var(--white-72); margin-bottom: 0.5rem; }
 
 /* Buttons side by side, stacking when there is no room */
 .cta-row { display: flex; flex-wrap: wrap; gap: 0.75em; justify-content: center; }
@@ -310,7 +311,7 @@ body.terms .container { padding-bottom: 0; }
 /* Short supporting line under a block, e.g. under the app badges */
 p.note { color: var(--white-72); font-size: 1rem; line-height: 1.6; margin: 0 auto; max-width: 26em; padding-top: 1.5rem; }
 /* Intro line under a headline: the site's body text, Effra 18px at 1.6 */
-p.lede { color: var(--white-72); font-size: 1.125rem; line-height: 1.6; margin: 0 auto 2rem; max-width: 26em; }
+p.lede { color: var(--white-72); font-size: 1rem; line-height: 1.5; margin: 0 auto 1.25rem; max-width: 28em; }
 .app-stores a { display: inline-block; margin: 0 0.15em; position: relative; }
 .app-stores a img { display: block; height: 3.5em; }
 @media screen and (max-width: 400px) { .app-stores a img { height: 3em; } }
@@ -341,7 +342,7 @@ p.lede { color: var(--white-72); font-size: 1.125rem; line-height: 1.6; margin: 
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
   padding: 0 var(--slider-inset);
 }
 .card-slider-nav .title { flex: 1; justify-content: flex-start; margin: 0; }
