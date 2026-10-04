@@ -190,8 +190,3 @@ Kept so nobody repeats it.
   Instant On only answers on the host it passes in `post=`.
 - **A different host.** The site first ran on another static host. It was replaced by GitHub
   Pages and removed, along with its tooling.
-
-## Open items
-
-- Balance to review the terms wording and supply official app badges and social icons.
-- Roll out to all four locations: Downtown Cleveland, Downtown Toledo, Sylvania, Perrysburg.
